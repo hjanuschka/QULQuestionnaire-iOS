@@ -111,7 +111,7 @@
 
 - (void)loadStepViewControllers {
     NSArray *stepViewControllers = [self stepViewControllers];
-    NSAssert([stepViewControllers count] > 0, @"Fatal: At least one step view controller must be returned by -[%@ stepViewControllers].", [self class]);
+    NSAssert([stepViewControllers count] > 0, @"Fatal: At least one step view controller must be returned by +[%@ stepViewControllers].", [self class]);
     
     for(UIViewController *aViewController in stepViewControllers) {
         NSAssert([aViewController isKindOfClass:[UIViewController class]], @"Fatal: %@ is not a subclass from UIViewController. Only UIViewControllers are supported by RMStepsController as steps.", [aViewController class]);
@@ -138,7 +138,7 @@
 
 - (void)showStepViewControllerWithoutAnimation:(UIViewController *)aViewController {
     [self.currentStepViewController.view removeFromSuperview];
-    
+
     CGFloat y = 0;
     if(![self extendViewControllerBelowBars:aViewController])
         y = self.stepsBar.frame.origin.y + self.stepsBar.frame.size.height;
@@ -148,7 +148,7 @@
     aViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     
     [self.stepViewControllerContainer addSubview:aViewController.view];
-    
+
     self.currentStepViewController = aViewController;
     [self.stepsBar setIndexOfSelectedStep:[self.childViewControllers indexOfObject:aViewController] animated:NO];
 }
@@ -159,7 +159,7 @@
     
     BOOL fromLeft = NO;
     if(oldIndex < newIndex)
-        fromLeft = NO;
+		fromLeft = NO;
     else
         fromLeft = YES;
     
@@ -213,11 +213,6 @@
     } else {
         [self canceled];
     }
-}
-
-- (void)showStepForIndex:(NSInteger)index {
-    UIViewController *stepViewController = [self.childViewControllers objectAtIndex:index];
-    [self showStepViewController:stepViewController animated:YES];
 }
 
 - (void)finishedAllSteps {

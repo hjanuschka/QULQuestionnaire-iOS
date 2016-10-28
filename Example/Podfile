@@ -2,5 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'QULQuestionnaire-iOS_Example'  do
+  pod "RMStepsController",:git=>"https://github.com/CooperRS/RMStepsController.git",  :branch => "UnlimitedSteps"
+  #pod "RMStepsController",:git=>"https://github.com/CooperRS/RMStepsController.git"
   pod "QULQuestionnaire", :path => "../"
 end

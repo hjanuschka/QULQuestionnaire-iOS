@@ -40,6 +40,7 @@
 - (instancetype)initWithQuestionnaireData:(NSArray *)questionnaireData {
     self = [super init];
     if (self) {
+        
         [self prepareViewControllers:questionnaireData];
     }
     return self;
@@ -54,7 +55,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.results[@"data"] = [@[] mutableCopy];

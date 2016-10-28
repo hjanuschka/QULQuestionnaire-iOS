@@ -29,47 +29,36 @@
 @interface RMStep ()
 
 @property (nonatomic, strong, readwrite) UIView *stepView;
-@property (nonatomic, strong) UILabel *numberLabel;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) CAShapeLayer *circleLayer;
+@property (nonatomic, strong, readwrite) UILabel *numberLabel;
+@property (nonatomic, strong, readwrite) UILabel *titleLabel;
+
+@property (nonatomic, strong, readwrite) CAShapeLayer *circleLayer;
 
 @end
 
 @implementation RMStep
-
-
-- (void)updateConstrains {
-    UILabel *titleLabel = self.titleLabel;
-    UILabel *numberLabel = self.numberLabel;
-    NSDictionary *bindingsDict = NSDictionaryOfVariableBindings(titleLabel, numberLabel);
-    
-    NSArray* leftMarginConstraints;
-    if (self.hideNumberLabel) {
-        leftMarginConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-(8)-[titleLabel]-(0)-|" options:0 metrics:nil views:bindingsDict];
-    } else {
-        leftMarginConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-(40)-[titleLabel]-(0)-|" options:0 metrics:nil views:bindingsDict];
-        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(11)-[numberLabel]-(9)-[titleLabel]" options:0 metrics:nil views:bindingsDict]];
-        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[numberLabel]-(0)-|" options:0 metrics:nil views:bindingsDict]];
-    }
-    
-    [_stepView addConstraints: leftMarginConstraints];
-    [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[titleLabel]-(0)-|" options:0 metrics:nil views:bindingsDict]];
-    
-    [self.stepView setNeedsUpdateConstraints];
-}
 
 #pragma mark Properties
 - (UIView *)stepView {
     if(!_stepView) {
         self.stepView = [[UIView alloc] initWithFrame:CGRectZero];
         _stepView.translatesAutoresizingMaskIntoConstraints = NO;
+        _stepView.clipsToBounds = YES;
+        _stepView.backgroundColor = self.disabledBarColor;
         
         [_stepView.layer addSublayer:self.circleLayer];
         
         [_stepView addSubview:self.numberLabel];
         [_stepView addSubview:self.titleLabel];
         
-        [self updateConstrains];
+        UILabel *titleLabel = self.titleLabel;
+        UILabel *numberLabel = self.numberLabel;
+        NSDictionary *bindingsDict = NSDictionaryOfVariableBindings(titleLabel, numberLabel);
+        
+        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(40)-[titleLabel]-(0)-|" options:0 metrics:nil views:bindingsDict]];
+        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[titleLabel]-(0)-|" options:0 metrics:nil views:bindingsDict]];
+        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(11)-[numberLabel]-(9)-[titleLabel]" options:0 metrics:nil views:bindingsDict]];
+        [_stepView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(0)-[numberLabel]-(0)-|" options:0 metrics:nil views:bindingsDict]];
     }
     
     return _stepView;
@@ -172,21 +161,6 @@
     }
     
     return _disabledTextColor;
-}
-
-
-- (void)setHideNumberLabel:(BOOL)hideNumberLabel {
-    _hideNumberLabel = hideNumberLabel;
-    
-    for (NSLayoutConstraint* contraint in self.stepView.constraints)
-    {
-        [self.stepView removeConstraint: contraint];
-    }
-    
-    self.numberLabel.hidden = hideNumberLabel;
-    self.circleLayer.hidden = hideNumberLabel;
-    
-    [self updateConstrains];
 }
 
 @end

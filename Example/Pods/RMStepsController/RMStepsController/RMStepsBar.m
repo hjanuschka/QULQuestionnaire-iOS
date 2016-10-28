@@ -36,7 +36,11 @@
 #define RM_LEFT_SEPERATOR_KEY @"RM_LEFT_SEPERATOR_KEY"
 #define RM_RIGHT_SEPERATOR_KEY @"RM_RIGHT_SEPERATOR_KEY"
 #define RM_STEP_KEY @"RM_STEP_KEY"
-#define RM_STEP_WIDTH_CONSTRAINT_KEY @"RM_STEP_WIDTH_CONSTRAINT_KEY"
+#define RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY @"RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY"
+#define RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY @"RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY"
+
+#define RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY @"RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY"
+#define RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY @"RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY"
 
 #pragma mark - Helper Categories
 
@@ -156,7 +160,7 @@
     
     UIBezierPath *rightBezier = [UIBezierPath bezierPath];
     [rightBezier moveToPoint:CGPointMake(0, 0)];
-    [rightBezier addLineToPoint:CGPointMake(self.frame.size.width-0.5, self.frame.size.height/2)];
+    [rightBezier addLineToPoint:CGPointMake(self.frame.size.width, self.frame.size.height/2)];
     [rightBezier addLineToPoint:CGPointMake(0, self.frame.size.height)];
     [rightBezier addLineToPoint:CGPointMake(self.frame.size.width, self.frame.size.height)];
     [rightBezier addLineToPoint:CGPointMake(self.frame.size.width, 0)];
@@ -174,10 +178,10 @@
     
     UIBezierPath *bezier = [UIBezierPath bezierPath];
     [bezier moveToPoint:CGPointMake(0, 0)];
-    [bezier addLineToPoint:CGPointMake(self.frame.size.width-0.5, self.frame.size.height/2)];
+    [bezier addLineToPoint:CGPointMake(self.frame.size.width, self.frame.size.height/2)];
     [bezier addLineToPoint:CGPointMake(0, self.frame.size.height)];
     
-    [bezier setLineWidth:0.5];
+    [bezier setLineWidth:1.0];
     [bezier setLineJoinStyle:kCGLineJoinBevel];
     
     [self.seperatorColor setStroke];
@@ -199,7 +203,7 @@
 
 #pragma mark - Main Implementation
 
-@interface RMStepsBar ()
+@interface RMStepsBar () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) UIView *topLine;
 @property (nonatomic, strong) UIView *bottomLine;
@@ -209,6 +213,8 @@
 @property (nonatomic, strong, readwrite) UIButton *cancelButton;
 
 @property (nonatomic, strong) NSMutableArray *stepDictionaries;
+@property (nonatomic, strong) NSDictionary *leftMoreStepDictionary;
+@property (nonatomic, strong) NSDictionary *rightMoreStepDictionary;
 
 @end
 
@@ -223,16 +229,16 @@
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.clipsToBounds = YES;
         
-        self.topLine.frame = CGRectMake(0, frame.size.height-43, frame.size.width, 0.4);
+        self.topLine.frame = CGRectMake(0, frame.size.height-44, frame.size.width, 1);
         [self addSubview:self.topLine];
         
-        self.bottomLine.frame = CGRectMake(0, frame.size.height-0.5, frame.size.width, 0.5);
+        self.bottomLine.frame = CGRectMake(0, frame.size.height-1, frame.size.width, 1);
         [self addSubview:self.bottomLine];
         
         self.cancelButton.frame = CGRectMake(0, frame.size.height-43, RM_CANCEL_BUTTON_WIDTH, 42);
         [self addSubview:self.cancelButton];
         
-        self.cancelSeperator.frame = CGRectMake(RM_CANCEL_BUTTON_WIDTH, frame.size.height-44, 0.5, frame.size.height);
+        self.cancelSeperator.frame = CGRectMake(RM_CANCEL_BUTTON_WIDTH, frame.size.height-44, 1, frame.size.height);
         [self addSubview:self.cancelSeperator];
         
         NSNumber *cancelWidth = @(RM_CANCEL_BUTTON_WIDTH);
@@ -242,14 +248,14 @@
         
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[_topLine]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[_bottomLine]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_cancelButton(cancelWidth)]-(0)-[_cancelSeperator(0.5)]" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_cancelButton(cancelWidth)]-(0)-[_cancelSeperator(1)]" options:0 metrics:metricsDict views:bindingsDict]];
         
         self.cancelButtonXConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"|-(0)-[_cancelButton]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
         [self addConstraint:self.cancelButtonXConstraint];
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLine(0.5)]-(43)-[_bottomLine(0.5)]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cancelButton(43)]-(0.5)-|" options:0 metrics:metricsDict views:bindingsDict]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cancelSeperator(43)]-(0.5)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLine(1)]-(42)-[_bottomLine(1)]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cancelButton(42)]-(1)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cancelSeperator(42)]-(1)-|" options:0 metrics:metricsDict views:bindingsDict]];
         
         [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(recognizedTap:)]];
     }
@@ -277,6 +283,8 @@
                 [(RMStepSeperatorView *)aStepDict[RM_RIGHT_SEPERATOR_KEY] setSeperatorColor:newSeperatorColor];
             }
         }
+        
+        [(RMStepSeperatorView *)self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_KEY] setSeperatorColor:newSeperatorColor];
     }
 }
 
@@ -322,7 +330,6 @@
     }
 }
 
-
 - (UIButton *)cancelButton {
     if(!_cancelButton) {
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -360,30 +367,15 @@
 
 - (void)setIndexOfSelectedStep:(NSUInteger)newIndexOfSelectedStep animated:(BOOL)animated {
     if(_indexOfSelectedStep != newIndexOfSelectedStep) {
-        NSDictionary *oldStepDict = [self.stepDictionaries objectAtIndex:_indexOfSelectedStep];
-        NSDictionary *newStepDict = [self.stepDictionaries objectAtIndex:newIndexOfSelectedStep];
-        
-        [self removeConstraint:newStepDict[RM_STEP_WIDTH_CONSTRAINT_KEY]];
-        [self addConstraint:oldStepDict[RM_STEP_WIDTH_CONSTRAINT_KEY]];
-        
         _indexOfSelectedStep = newIndexOfSelectedStep;
         
-        if(animated) {
-            __block RMStepsBar *blockself = self;
-            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                [blockself layoutIfNeeded];
-            } completion:nil];
-        } else
-            [self layoutIfNeeded];
-        
-        [self updateStepsAnimated:animated];
-    } else {
-        [self updateStepsAnimated:NO];
+        [self updateStepWidthsAnimated:animated];
+        [self updateStepColorsAnimated:animated];
     }
 }
 
 #pragma mark - Helper
-- (void)updateStepsAnimated:(BOOL)animated {
+- (void)updateStepColorsAnimated:(BOOL)animated {
     __weak RMStepsBar *blockself = self;
     [self.stepDictionaries enumerateObjectsUsingBlock:^(NSDictionary *aStepDict, NSUInteger idx, BOOL *stop) {
         RMStep *step = (RMStep *)aStepDict[RM_STEP_KEY];
@@ -396,7 +388,6 @@
                 step.titleLabel.textColor = step.enabledTextColor;
                 step.numberLabel.textColor = step.enabledTextColor;
                 step.circleLayer.strokeColor = step.enabledTextColor.CGColor;
-                step.hideNumberLabel = NO;
             };
             
             if(animated)
@@ -412,7 +403,6 @@
                 step.titleLabel.textColor = step.selectedTextColor;
                 step.numberLabel.textColor = step.selectedTextColor;
                 step.circleLayer.strokeColor = step.selectedTextColor.CGColor;
-                step.hideNumberLabel = self.hideNumberLabelWhenActiveStep;
             };
             
             if(animated)
@@ -428,7 +418,6 @@
                 step.titleLabel.textColor = step.disabledTextColor;
                 step.numberLabel.textColor = step.disabledTextColor;
                 step.circleLayer.strokeColor = step.disabledTextColor.CGColor;
-                step.hideNumberLabel = NO;
             };
             
             if(animated)
@@ -442,9 +431,118 @@
     }];
 }
 
+- (void)updateStepWidthsAnimated:(BOOL)animated {
+    //Remove constraints
+    [self removeConstraint:self.leftMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+    [self removeConstraint:self.leftMoreStepDictionary[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+    
+    [self removeConstraint:self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+    [self removeConstraint:self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+    
+    for(NSDictionary *aStepDict in self.stepDictionaries) {
+        [self removeConstraint:aStepDict[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+        [self removeConstraint:aStepDict[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+        
+        [self removeConstraint:aStepDict[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+        [self removeConstraint:aStepDict[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+    }
+    
+    [self removeConstraint:self.rightMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+    [self removeConstraint:self.rightMoreStepDictionary[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+    
+    //Add constraints
+    NSInteger numberOfSteps = [self.stepDictionaries count];
+    
+    if(numberOfSteps <= 5) { //We only have 5 steps => Use old behaviour
+        [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if(idx != self.indexOfSelectedStep) {
+                [self addConstraint:obj[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+            }
+            
+            if(idx < numberOfSteps-1) {
+                [self addConstraint:obj[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+            }
+        }];
+    } else { //We have more than 5 steps => Use new behaviour
+        __weak RMStepsBar *blockself = self;
+        if(self.indexOfSelectedStep < 2) { //Hide left more step, show right more step
+            [self addConstraint:self.leftMoreStepDictionary[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+            [self addConstraint:self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+            
+            [self addConstraint:self.rightMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+            
+            [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if(idx == blockself.indexOfSelectedStep) {
+                    //Ignore
+                } else if(idx == 0 || idx == 1 || idx == 2) {
+                    [blockself addConstraint:obj[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+                }
+                
+                if(idx == 0 || idx == 1 || idx == numberOfSteps-1) {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+                }
+            }];
+        } else if(self.indexOfSelectedStep > numberOfSteps-3) { //Hide right more step, show left more step
+            [self addConstraint:self.leftMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+            [self addConstraint:self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+            
+            [self addConstraint:self.rightMoreStepDictionary[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+            
+            [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if(idx == blockself.indexOfSelectedStep) {
+                    //Ignore
+                } else if(idx == numberOfSteps-1 || idx == numberOfSteps-2 || idx == numberOfSteps-3) {
+                    [blockself addConstraint:obj[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+                }
+                
+                if(idx == numberOfSteps-2 || idx == numberOfSteps-3) {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+                }
+            }];
+        } else { //Show both more steps
+            [self addConstraint:self.leftMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+            [self addConstraint:self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+            
+            [self addConstraint:self.rightMoreStepDictionary[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+            
+            [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if(idx == blockself.indexOfSelectedStep) {
+                    //Ignore
+                } else if(idx == blockself.indexOfSelectedStep-1 || idx == blockself.indexOfSelectedStep+1) {
+                    [blockself addConstraint:obj[RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY]];
+                }
+                
+                if(idx == blockself.indexOfSelectedStep-1 || idx == blockself.indexOfSelectedStep || idx == numberOfSteps-1) {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY]];
+                } else {
+                    [blockself addConstraint:obj[RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY]];
+                }
+            }];
+        }
+    }
+    
+    if(animated) {
+        __block RMStepsBar *blockself = self;
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            [blockself layoutIfNeeded];
+        } completion:nil];
+    } else
+        [self layoutIfNeeded];
+}
 
 #pragma mark - Actions
 - (void)reloadData {
+    //Remove existing steps
     [self.stepDictionaries enumerateObjectsUsingBlock:^(NSDictionary *aStepDict, NSUInteger idx, BOOL *stop) {
         if((RMStepSeperatorView *)aStepDict[RM_RIGHT_SEPERATOR_KEY])
             [(RMStepSeperatorView *)aStepDict[RM_RIGHT_SEPERATOR_KEY] removeFromSuperview];
@@ -452,14 +550,64 @@
     }];
     [self.stepDictionaries removeAllObjects];
     
+    [self.leftMoreStepDictionary[RM_STEP_KEY] removeFromSuperview];
+    [self.rightMoreStepDictionary[RM_STEP_KEY] removeFromSuperview];
+    
+    self.leftMoreStepDictionary = nil;
+    self.rightMoreStepDictionary = nil;
+    
+    //General values
+    __block NSUInteger numberOfSteps = [self.dataSource numberOfStepsInStepsBar:self];
+    
+    NSNumber *minimalStepWidth = @(RM_MINIMAL_STEP_WIDTH);
+    NSNumber *seperatorWidth = @(RM_SEPERATOR_WIDTH);
+    NSDictionary *metricsDict = NSDictionaryOfVariableBindings(minimalStepWidth, seperatorWidth);
+    
     RMStepSeperatorView *leftSeperator = nil;
     RMStepSeperatorView *rightSeperator = nil;
     
-    __block NSUInteger numberOfSteps = [self.dataSource numberOfStepsInStepsBar:self];
+    //Add left more step
+    if(numberOfSteps > 5) {
+        rightSeperator = [[RMStepSeperatorView alloc] initWithFrame:CGRectZero];
+        rightSeperator.seperatorColor = self.seperatorColor;
+        rightSeperator.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [self addSubview:rightSeperator];
+        
+        RMStep *leftMoreStep = [[RMStep alloc] init];
+        leftMoreStep.numberLabel.text = @"...";
+        leftMoreStep.stepView.backgroundColor = leftMoreStep.enabledBarColor;
+        leftMoreStep.titleLabel.textColor = leftMoreStep.enabledTextColor;
+        leftMoreStep.numberLabel.textColor = leftMoreStep.enabledTextColor;
+        leftMoreStep.circleLayer.strokeColor = leftMoreStep.enabledTextColor.CGColor;
+        
+        [rightSeperator setLeftColor:leftMoreStep.enabledBarColor animated:NO];
+        
+        [self addSubview:leftMoreStep.stepView];
+        
+        UIView *leftEnd = self.cancelSeperator;
+        UIView *rightEnd = rightSeperator;
+        UIView *stepView = leftMoreStep.stepView;
+        NSDictionary *bindingsDict = NSDictionaryOfVariableBindings(leftEnd, rightEnd, stepView);
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stepView(42)]-(1)-|" options:0 metrics:nil views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[leftEnd]-(0)-[stepView]-(0)-[rightEnd]" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightEnd(42)]-(1)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        
+        NSLayoutConstraint *rightSeperatorShowWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[rightEnd(seperatorWidth)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+        NSLayoutConstraint *rightSeperatorHideWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[rightEnd(0)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+        
+        NSLayoutConstraint *leftMoreStepNotSelectedWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(minimalStepWidth)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+        NSLayoutConstraint *leftMoreStepHiddenWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(0)]" options:0 metrics:nil views:bindingsDict] lastObject];
+        
+        self.leftMoreStepDictionary = @{RM_STEP_KEY: leftMoreStep, RM_RIGHT_SEPERATOR_KEY: rightSeperator, RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY: leftMoreStepNotSelectedWidthConstraint, RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY: leftMoreStepHiddenWidthConstraint, RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY: rightSeperatorShowWidthConstraint, RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY: rightSeperatorHideWidthConstraint};
+    }
+    
+    //Add all actual steps
     for(NSUInteger i=0 ; i<numberOfSteps ; i++) {
         leftSeperator = rightSeperator;
         
-        if(i == numberOfSteps-1) {
+        if(numberOfSteps <= 5 && i == numberOfSteps-1) {
             rightSeperator = nil;
         } else {
             rightSeperator = [[RMStepSeperatorView alloc] initWithFrame:CGRectZero];
@@ -471,42 +619,71 @@
         
         RMStep *step = [self.dataSource stepsBar:self stepAtIndex:i];
         step.numberLabel.text = [NSString stringWithFormat:@"%lu", (long unsigned)i+1];
+        
         [self addSubview:step.stepView];
         
         UIView *leftEnd = leftSeperator ? leftSeperator : self.cancelSeperator;
         UIView *rightEnd = rightSeperator ? rightSeperator : self;
         UIView *stepView = step.stepView;
-        NSNumber *minimalStepWidth = @(RM_MINIMAL_STEP_WIDTH);
-        NSNumber *seperatorWidth = @(RM_SEPERATOR_WIDTH);
-        
         NSDictionary *bindingsDict = NSDictionaryOfVariableBindings(leftEnd, rightEnd, stepView);
-        NSDictionary *metricsDict = NSDictionaryOfVariableBindings(minimalStepWidth, seperatorWidth);
         
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stepView(44)]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stepView(42)]-(1)-|" options:0 metrics:metricsDict views:bindingsDict]];
+        
+        NSLayoutConstraint *rightSeperatorShowWidthConstraint = nil;
+        NSLayoutConstraint *rightSeperatorHideWidthConstraint = nil;
+        
         if(rightSeperator) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[leftEnd]-(0)-[stepView]-(0)-[rightEnd]" options:0 metrics:metricsDict views:bindingsDict]];
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightEnd(42)]-(1)-|" options:0 metrics:metricsDict views:bindingsDict]];
             
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[rightEnd(seperatorWidth)]" options:0 metrics:metricsDict views:bindingsDict]];
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightEnd(44)]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
+            rightSeperatorShowWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[rightEnd(seperatorWidth)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+            rightSeperatorHideWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[rightEnd(0)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
         } else {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[leftEnd]-(0)-[stepView]-(0)-|" options:0 metrics:metricsDict views:bindingsDict]];
         }
         
-        NSArray *widthConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(minimalStepWidth)]" options:0 metrics:metricsDict views:bindingsDict];
-        if(i != self.indexOfSelectedStep) {
-            [self addConstraint:[widthConstraints lastObject]];
-        }
+        NSLayoutConstraint *notSelectedWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(minimalStepWidth)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+        NSLayoutConstraint *hiddenWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(0)]" options:0 metrics:nil views:bindingsDict] lastObject];
         
         if(leftSeperator && rightSeperator) {
-            [self.stepDictionaries addObject:@{RM_LEFT_SEPERATOR_KEY: leftSeperator, RM_STEP_KEY: step, RM_RIGHT_SEPERATOR_KEY: rightSeperator, RM_STEP_WIDTH_CONSTRAINT_KEY: [widthConstraints lastObject]}];
+            [self.stepDictionaries addObject:@{RM_LEFT_SEPERATOR_KEY: leftSeperator, RM_STEP_KEY: step, RM_RIGHT_SEPERATOR_KEY: rightSeperator, RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY: notSelectedWidthConstraint, RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY: hiddenWidthConstraint, RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY: rightSeperatorShowWidthConstraint, RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY: rightSeperatorHideWidthConstraint}];
         } else if(leftSeperator && !rightSeperator) {
-            [self.stepDictionaries addObject:@{RM_LEFT_SEPERATOR_KEY: leftSeperator, RM_STEP_KEY: step, RM_STEP_WIDTH_CONSTRAINT_KEY: [widthConstraints lastObject]}];
+            [self.stepDictionaries addObject:@{RM_LEFT_SEPERATOR_KEY: leftSeperator, RM_STEP_KEY: step, RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY: notSelectedWidthConstraint, RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY: hiddenWidthConstraint}];
         } else if(!leftSeperator && rightSeperator) {
-            [self.stepDictionaries addObject:@{RM_STEP_KEY: step, RM_RIGHT_SEPERATOR_KEY: rightSeperator, RM_STEP_WIDTH_CONSTRAINT_KEY: [widthConstraints lastObject]}];
+            [self.stepDictionaries addObject:@{RM_STEP_KEY: step, RM_RIGHT_SEPERATOR_KEY: rightSeperator, RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY: notSelectedWidthConstraint, RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY: hiddenWidthConstraint, RM_RIGHT_SEPERATOR_SHOW_WIDTH_CONSTRAINT_KEY: rightSeperatorShowWidthConstraint, RM_RIGHT_SEPERATOR_HIDE_WIDTH_CONSTRAINT_KEY: rightSeperatorHideWidthConstraint}];
         }
-        
-        [self updateStepsAnimated:NO];
     }
+    
+    //Add right more step
+    if(numberOfSteps > 5) {
+        leftSeperator = rightSeperator;
+        
+        RMStep *rightMoreStep = [[RMStep alloc] init];
+        rightMoreStep.numberLabel.text = @"...";
+        rightMoreStep.stepView.backgroundColor = rightMoreStep.disabledBarColor;
+        rightMoreStep.titleLabel.textColor = rightMoreStep.disabledTextColor;
+        rightMoreStep.numberLabel.textColor = rightMoreStep.disabledTextColor;
+        rightMoreStep.circleLayer.strokeColor = rightMoreStep.disabledTextColor.CGColor;
+        
+        [leftSeperator setRightColor:rightMoreStep.disabledBarColor animated:NO];
+        
+        [self addSubview:rightMoreStep.stepView];
+        
+        UIView *leftEnd = [self.stepDictionaries lastObject][RM_RIGHT_SEPERATOR_KEY];
+        UIView *stepView = rightMoreStep.stepView;
+        NSDictionary *bindingsDict = NSDictionaryOfVariableBindings(leftEnd, stepView);
+        
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[stepView(42)]-(1)-|" options:0 metrics:nil views:bindingsDict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[leftEnd]-(0)-[stepView]-(0)-|" options:0 metrics:nil views:bindingsDict]];
+        
+        NSLayoutConstraint *rightMoreStepNotSelectedWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(minimalStepWidth)]" options:0 metrics:metricsDict views:bindingsDict] lastObject];
+        NSLayoutConstraint *rightMoreStepHiddenWidthConstraint = [[NSLayoutConstraint constraintsWithVisualFormat:@"[stepView(0)]" options:0 metrics:nil views:bindingsDict] lastObject];
+        
+        self.rightMoreStepDictionary = @{RM_LEFT_SEPERATOR_KEY: leftSeperator, RM_STEP_KEY: rightMoreStep, RM_STEP_NOT_SELECTED_WIDTH_CONSTRAINT_KEY: rightMoreStepNotSelectedWidthConstraint, RM_STEP_HIDDEN_WIDTH_CONSTRAINT_KEY: rightMoreStepHiddenWidthConstraint};
+    }
+    
+    [self updateStepWidthsAnimated:NO];
+    [self updateStepColorsAnimated:NO];
 }
 
 - (void)cancelButtonTapped:(id)sender {
@@ -515,16 +692,93 @@
 
 - (void)recognizedTap:(UIGestureRecognizer *)recognizer {
     CGPoint touchLocation = [recognizer locationInView:self];
+    BOOL found = NO;
     for(NSDictionary *aStepDict in self.stepDictionaries) {
         RMStep *step = aStepDict[RM_STEP_KEY];
         
         if(CGRectContainsPoint(step.stepView.frame, touchLocation)) {
+            found = YES;
             NSInteger index = [self.stepDictionaries indexOfObject:aStepDict];
-            if(index < self.indexOfSelectedStep && self.allowBackward) {
+            if(index < self.indexOfSelectedStep) {
                 [self.delegate stepsBar:self shouldSelectStepAtIndex:index];
             }
         }
     }
+    
+    if (!found) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] init];
+        BOOL foundPoint = NO;
+        
+        NSString *leftRight;
+        if (self.leftMoreStepDictionary) {
+            RMStep *leftMoreStep = self.leftMoreStepDictionary[RM_STEP_KEY];
+            if(CGRectContainsPoint(leftMoreStep.stepView.frame, touchLocation)) {
+                leftRight = @"left";
+                foundPoint = YES;
+                RMStepSeperatorView *rightMoreStepSeperator = self.leftMoreStepDictionary[RM_RIGHT_SEPERATOR_KEY];
+                
+                [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    RMStep *step = obj[RM_STEP_KEY];
+                    
+                    if ((rightMoreStepSeperator.frame.origin.x + rightMoreStepSeperator.frame.size.width) == step.stepView.frame.origin.x &&
+                        idx < self.indexOfSelectedStep - 1) {
+                        [actionSheet addButtonWithTitle:step.title];
+                    }
+                }];
+            }
+        }
+        
+        if (self.rightMoreStepDictionary) {
+            RMStep *rightMoreStep = self.rightMoreStepDictionary[RM_STEP_KEY];
+            if(CGRectContainsPoint(rightMoreStep.stepView.frame, touchLocation)) {
+                leftRight = @"right";
+                foundPoint = YES;
+                RMStepSeperatorView *rightMoreStepSeperator = self.rightMoreStepDictionary[RM_LEFT_SEPERATOR_KEY];
+                
+                [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    RMStep *step = obj[RM_STEP_KEY];
+                    
+                    if (rightMoreStepSeperator.frame.origin.x == step.stepView.frame.origin.x) {
+                        [actionSheet addButtonWithTitle:step.title];
+                    }
+                }];
+            }
+        }
+        
+        if (foundPoint) {
+            actionSheet.delegate = self;
+            actionSheet.title = [leftRight isEqualToString:@"left"] ? @"Please select a step." : @"Upcoming steps.\n(Skipping steps is not possible.)";
+            actionSheet.cancelButtonIndex = [actionSheet addButtonWithTitle:@"Cancel"];
+            [actionSheet showInView:[[self superview] superview]];
+        } else {
+            actionSheet = nil;
+        }
+    }
 }
+
+#pragma mark - UIActionSheet delegate conformance
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+    
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    __block NSUInteger selectedStepIndex = 0;
+    [self.stepDictionaries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        RMStep *step = obj[RM_STEP_KEY];
+        
+        if ([step.title isEqualToString:title]) {
+            selectedStepIndex = idx;
+            *stop = YES;
+        }
+    }];
+    
+    if(selectedStepIndex < self.indexOfSelectedStep) {
+        [self.delegate stepsBar:self shouldSelectStepAtIndex:selectedStepIndex];
+    }
+}
+
 
 @end
