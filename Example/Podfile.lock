@@ -1,6 +1,6 @@
 PODS:
   - QULQuestionnaire (0.4):
-    - RMStepsController (~> 1.0.2)
+    - RMStepsController
   - RMStepsController (1.0.2)
 
 DEPENDENCIES:
@@ -11,7 +11,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  QULQuestionnaire: 27254168f0028ec75a700374bd35a129f88639cc
+  QULQuestionnaire: 366cd083a335b2820d6d958659e189d57938edbd
   RMStepsController: 195aa02c57ee5fea74483d0b9dcc30881ae7639d
 
-COCOAPODS: 0.37.2
+PODFILE CHECKSUM: e99afbed028a597f3814517560166d976da02832
+
+COCOAPODS: 1.1.0.rc.2

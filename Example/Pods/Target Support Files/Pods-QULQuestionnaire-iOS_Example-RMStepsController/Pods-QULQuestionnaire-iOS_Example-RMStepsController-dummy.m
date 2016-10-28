@@ -1,5 +1,0 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_QULQuestionnaire_iOS_Example_RMStepsController : NSObject
-@end
-@implementation PodsDummy_Pods_QULQuestionnaire_iOS_Example_RMStepsController
-@end

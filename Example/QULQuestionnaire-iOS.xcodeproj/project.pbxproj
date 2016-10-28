@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		017AAA6BAF15E1F7C2ECD0C0 /* Pods_QULQuestionnaire_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F095024311924B03DD20C383 /* Pods_QULQuestionnaire_iOS_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		39EE23861B17953A00B0C53C /* questionnaire.json in Resources */ = {isa = PBXBuildFile; fileRef = 39EE23851B17953A00B0C53C /* questionnaire.json */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -24,6 +23,9 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		771318991DC33F890038D55A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 771318981DC33F890038D55A /* LaunchScreen.storyboard */; };
+		7713189C1DC3448E0038D55A /* QULQuestHandlerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7713189B1DC3448E0038D55A /* QULQuestHandlerViewController.m */; };
+		DD9C9EDB66F0678F563EF87B /* Pods_QULQuestionnaire_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40F2E7725ABCF61708B5C5B /* Pods_QULQuestionnaire_iOS_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +41,8 @@
 /* Begin PBXFileReference section */
 		0AA4CB4800C7FE837C7F454D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		39EE23851B17953A00B0C53C /* questionnaire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = questionnaire.json; sourceTree = "<group>"; };
-		427087959DC3A8DF36205FC7 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QULQuestionnaire-iOS_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-QULQuestionnaire-iOS_Example/Pods-QULQuestionnaire-iOS_Example.release.xcconfig"; sourceTree = "<group>"; };
-		59FAE8651375CD172B38002A /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QULQuestionnaire-iOS_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QULQuestionnaire-iOS_Example/Pods-QULQuestionnaire-iOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		6003F58A195388D20070C39A /* QULQuestionnaire-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "QULQuestionnaire-iOS.app"; path = "QULQuestionnaire-iOS_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		545191F73283CEEE2070FA94 /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QULQuestionnaire-iOS_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QULQuestionnaire-iOS_Example/Pods-QULQuestionnaire-iOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		6003F58A195388D20070C39A /* QULQuestionnaire-iOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QULQuestionnaire-iOS_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -62,9 +63,13 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		771318981DC33F890038D55A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7713189A1DC3448E0038D55A /* QULQuestHandlerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QULQuestHandlerViewController.h; sourceTree = "<group>"; };
+		7713189B1DC3448E0038D55A /* QULQuestHandlerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QULQuestHandlerViewController.m; sourceTree = "<group>"; };
 		BBEA18E85342E7DD352C0907 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		CC0B35BD9FCD946CF9CD5536 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QULQuestionnaire-iOS_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-QULQuestionnaire-iOS_Example/Pods-QULQuestionnaire-iOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		D35411E05F379371261E6B9F /* QULQuestionnaire.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = QULQuestionnaire.podspec; path = ../QULQuestionnaire.podspec; sourceTree = "<group>"; };
-		F095024311924B03DD20C383 /* Pods_QULQuestionnaire_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QULQuestionnaire_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40F2E7725ABCF61708B5C5B /* Pods_QULQuestionnaire_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QULQuestionnaire_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +80,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				017AAA6BAF15E1F7C2ECD0C0 /* Pods_QULQuestionnaire_iOS_Example.framework in Frameworks */,
+				DD9C9EDB66F0678F563EF87B /* Pods_QULQuestionnaire_iOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,14 +105,14 @@
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				D0B8A111838F3616C053ED17 /* Pods */,
+				7993E2FE8F1516452D7441C2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
 		6003F58B195388D20070C39A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6003F58A195388D20070C39A /* QULQuestionnaire-iOS.app */,
+				6003F58A195388D20070C39A /* QULQuestionnaire-iOS_Example.app */,
 				6003F5AE195388D20070C39A /* Tests.xctest */,
 			);
 			name = Products;
@@ -120,7 +125,7 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				F095024311924B03DD20C383 /* Pods_QULQuestionnaire_iOS_Example.framework */,
+				E40F2E7725ABCF61708B5C5B /* Pods_QULQuestionnaire_iOS_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,9 +139,12 @@
 				6003F5A2195388D20070C39A /* Main_iPad.storyboard */,
 				6003F5A5195388D20070C39A /* QULViewController.h */,
 				6003F5A6195388D20070C39A /* QULViewController.m */,
+				771318981DC33F890038D55A /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				39EE23851B17953A00B0C53C /* questionnaire.json */,
+				7713189A1DC3448E0038D55A /* QULQuestHandlerViewController.h */,
+				7713189B1DC3448E0038D55A /* QULQuestHandlerViewController.m */,
 			);
 			name = "Example for QULQuestionnaire-iOS";
 			path = "QULQuestionnaire-iOS";
@@ -182,11 +190,11 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		D0B8A111838F3616C053ED17 /* Pods */ = {
+		7993E2FE8F1516452D7441C2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				59FAE8651375CD172B38002A /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */,
-				427087959DC3A8DF36205FC7 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */,
+				545191F73283CEEE2070FA94 /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */,
+				CC0B35BD9FCD946CF9CD5536 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -198,12 +206,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "QULQuestionnaire-iOS_Example" */;
 			buildPhases = (
-				0C4085649C9F79C5D94577FE /* Check Pods Manifest.lock */,
+				641AED49DE974358121A1EB8 /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				7D149AEE419013A9A3F87DA0 /* Embed Pods Frameworks */,
-				8B070E7726B6001FBBFEF867 /* Copy Pods Resources */,
+				18A83340368A2A997B085231 /* [CP] Embed Pods Frameworks */,
+				EB9CC1806F888D0CF10471EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,7 +219,7 @@
 			);
 			name = "QULQuestionnaire-iOS_Example";
 			productName = "QULQuestionnaire-iOS";
-			productReference = 6003F58A195388D20070C39A /* QULQuestionnaire-iOS.app */;
+			productReference = 6003F58A195388D20070C39A /* QULQuestionnaire-iOS_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6003F5AD195388D20070C39A /* Tests */ = {
@@ -239,7 +247,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QUL;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Tilo Westermann";
 				TargetAttributes = {
 					6003F5AD195388D20070C39A = {
@@ -274,6 +282,7 @@
 				39EE23861B17953A00B0C53C /* questionnaire.json in Resources */,
 				6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				771318991DC33F890038D55A /* LaunchScreen.storyboard in Resources */,
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -290,29 +299,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C4085649C9F79C5D94577FE /* Check Pods Manifest.lock */ = {
+		18A83340368A2A997B085231 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		7D149AEE419013A9A3F87DA0 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,14 +314,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QULQuestionnaire-iOS_Example/Pods-QULQuestionnaire-iOS_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B070E7726B6001FBBFEF867 /* Copy Pods Resources */ = {
+		641AED49DE974358121A1EB8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EB9CC1806F888D0CF10471EB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +354,7 @@
 				6003F59E195388D20070C39A /* QULAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* QULViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				7713189C1DC3448E0038D55A /* QULQuestHandlerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,13 +425,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -434,7 +450,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -454,20 +470,25 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -476,14 +497,15 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59FAE8651375CD172B38002A /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */;
+			baseConfigurationReference = 545191F73283CEEE2070FA94 /* Pods-QULQuestionnaire-iOS_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QULQuestionnaire-iOS/QULQuestionnaire-iOS-Prefix.pch";
 				INFOPLIST_FILE = "QULQuestionnaire-iOS/QULQuestionnaire-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -491,14 +513,15 @@
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 427087959DC3A8DF36205FC7 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */;
+			baseConfigurationReference = CC0B35BD9FCD946CF9CD5536 /* Pods-QULQuestionnaire-iOS_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QULQuestionnaire-iOS/QULQuestionnaire-iOS-Prefix.pch";
 				INFOPLIST_FILE = "QULQuestionnaire-iOS/QULQuestionnaire-iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -520,6 +543,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QULQuestionnaire-iOS_Example.app/QULQuestionnaire-iOS_Example";
 				WRAPPER_EXTENSION = xctest;
@@ -538,6 +562,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QULQuestionnaire-iOS_Example.app/QULQuestionnaire-iOS_Example";
 				WRAPPER_EXTENSION = xctest;

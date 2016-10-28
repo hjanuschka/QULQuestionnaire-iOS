@@ -100,14 +100,19 @@
     }];
 }
 
+- (void) done {
+    ///OVERRIDE
+}
 - (void)finishedAllSteps {
     [self dismissViewControllerAnimated:YES completion:nil];
     
     self.results[@"endTime"] = [NSDate date];
+    [self done];
 }
 
 - (void)canceled {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self done];
 }
 
 - (BOOL)showStepsAnimated {

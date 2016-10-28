@@ -21,6 +21,7 @@
 
 #import "QULViewController.h"
 #import "QULQuestionnaireViewController.h"
+#import "QULQuestHandlerViewController.h"
 
 @interface QULViewController ()
 
@@ -91,7 +92,7 @@
 }
 
 - (void)showQuestionnaireWithData:(NSArray *)questionnaireData {
-    QULQuestionnaireViewController *controller = [[QULQuestionnaireViewController alloc] initWithQuestionnaireData:questionnaireData];
+    QULQuestHandlerViewController *controller = [[QULQuestHandlerViewController alloc] initWithQuestionnaireData:questionnaireData];
     
     [self presentViewController:controller animated:YES completion:NULL];
 }

@@ -11,19 +11,19 @@
     "git": "https://github.com/QULab/QULQuestionnaire-iOS.git",
     "tag": "0.4"
   },
-  "platforms": {
-    "ios": "7.0"
-  },
-  "requires_arc": true,
   "source_files": "Pod/Classes/**/*",
-  "ios": {
-    "resource_bundles": {
-      "QULQuestionnaire": "Pod/Assets/**/*.png"
-    }
+  "resource_bundles": {
+    "QULQuestionnaire": "Pod/Assets/*.png"
   },
   "dependencies": {
     "RMStepsController": [
-      "~> 1.0.2"
+
     ]
+  },
+  "platforms": {
+    "osx": null,
+    "ios": null,
+    "tvos": null,
+    "watchos": null
   }
 }
